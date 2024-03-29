@@ -275,4 +275,4 @@
             - LEFT|RIGHT OUTER JOIN(외부조인) - 어느 테이블이  기준인지에 따라서 결과가 상이함
                 - 참조 : https://sql-joins.leopard.in.ua/
 
-            ![외부조인](https://raw.githubusercontent.com/YooWangGwon/basic-database-2024/main/images/db002.png)
+            ![외부조인](https://raw.githubusercontent.com/YooWangGwon/basic-database-2024/main/images/db004.png)
