@@ -1,4 +1,4 @@
-﻿-- file : sql008_연습문제_part2.sql
+﻿-- file : sql009_연습문제_part2.sql
 -- date : 240329
 -- desc : 연습문제 part2
 

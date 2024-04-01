@@ -1,4 +1,8 @@
-﻿-- 모든 도서의 이름과 가격을 검색하시오
+﻿-- file : sql004_SELECT학습.sql
+-- date : 240328
+-- desc : SELECT 학습
+
+-- 모든 도서의 이름과 가격을 검색하시오
 -- ctrl + shift + U -> 대문자로 변경, ctrl + shift + L -> 소문자로 변경
 SELECT bookname, price
   FROM Book;

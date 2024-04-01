@@ -1,4 +1,4 @@
-﻿-- file 
+﻿-- file : sql010_Inner_Joim.sql
 -- date : 240329
 -- desc : 조인(Join)
 

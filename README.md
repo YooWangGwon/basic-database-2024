@@ -253,10 +253,10 @@
             HAVING COUNT(*) >= 2;
             ```
         
-        - 두개 이상의 테이블 질의
+        - 내부조인(Inner Join)
+            - 두개 이상의 테이블 질의
             - 관계형 DB에서 가장 중요한 기법 중 하나 : JOIN
-            - 내부조인(Inner Join)
-            ```
+            ```sql
             SELECT c.custid
                  , c.[name]
                  , c.phone
@@ -273,6 +273,175 @@
             [WHERE 검색 조건]
             ```
             - LEFT|RIGHT OUTER JOIN(외부조인) - 어느 테이블이  기준인지에 따라서 결과가 상이함
-                - 참조 : https://sql-joins.leopard.in.ua/
+                - [학습참조]:https://sql-joins.leopard.in.ua/
 
             ![외부조인](https://raw.githubusercontent.com/YooWangGwon/basic-database-2024/main/images/db004.png)
+
+## 3일차(24.04.01)
+- Database 학습
+    - 관계 데이터 모델
+        - 무결성 제약조건
+            - 키
+                - 키(Key) 
+                    - 릴레이션에서 특정 투플을 식별할 수 있는 속성 혹은 속성의 집합
+                    - 키가 되는 속성은 반드시 값이 달라서 투플들을 서로 구분할 수 있어야함
+                    - 키는 릴레이션 간의 관계를 맺는 데도 사용
+                
+                - 슈퍼키(super key)
+                    - 투플을 유일하게 식별할 수 있는 하나의 속성 혹은 속성의 집합(고객번호 | 주민번호 | 고객번호,이름 | 고객번호|주소 | 고객번호/이름/전화번호 | 이름 속성만으로는 불가능!)
+                    - 투플을 유일하게 식별할 수 있는 값이면 모두 수퍼키가 될 수 있음
+
+                - 후보키(candidate key)
+                    - 투플을 유일하게 식별할 수 있는 속성의 최소 집합(고객번호 | 주민번호)
+                    - 복합키(composite key) : 후보키 중 속성을 2개 이상 집합으로 한 키
+
+                - 기본키(Primary Key) ★★★
+                    - 여러 후보키 중 하나를 선정하여 대표로 삼는 키(고객번호)
+                    - 후보키가 하나라면 그 후보키를 기본키로 사용, 후보키가 여러개면 릴레이션의 특성을 반영하여 하나를 선택
+                    - 기본키 선정시 고려사항
+                        - 릴레이션 내 투플을 식벽할 수 있는 고유한 값을 가져야함
+                        - NULL 값은 허용하지 않음
+                        - 키값의 변동이 일어나선 안됨
+                        - 최대한 적은 수의 속성을 가진 것이어야 함
+                        - 향후 키를 사용하는 데 있어서 문제 발생 소지가 없어야 함 -> 개인정보 등의 보안사항은 사용을 자제
+
+                - 대리키(surrogate key)
+                    - 기본키에 보안을 요하거나 여러개의 속성으로 구성되어 복잡한 경우, 또는 마땅한 기본키가 없을 때, 일련번호 같은 가상의 속성을 만들어 기본키로 삼는 것
+                    - 인조키(artificial key)라고도 함
+                    - 대리키는 DBMS나 관련 소프트웨어에서 임의로 생성하는 값으로 사용자가 직관적으로 그 값의 의미를 알 수 없음
+
+                - 대체키(alternate key) : 기본키로  선정되지 않은 후보키
+
+                - 외래키 (foreign key) ★★★
+                    - 다른 릴레이션의 기본키를 참조하는 속성
+                    - 다른 릴레이션과의 관계
+                    - 다른 릴레이션의 기본키를 호칭
+                    - 고려사항
+                        - 서로 같은 값이 사용되야 함
+                        - 기본키가 변경되면 외래키도 변경되어야 함
+                    - 반드시 NOT NULL은 아님. -> NULL과 중복을 허용
+                    - 기본키를 가져와서 쓰지만 기본키의 특성을 가지진 않음
+                    - 자기 자신의 기본키를 외래키로 사용할 수 있음
+                    - 외래키가 기본키의 속성 중 하나가 될 수 있음
+
+            - 무결성 제약조건
+                - 데이터 무결성(Integrity) : 데이터베이스에 저장된 데이터의 일관성과 정확성을 지키는 것
+
+                - 도메인 무결성 제약조건(Domain integrity constraint)
+                    - 데이터 타입, NOT NULL, 기본값, 체크 특성을 지키는 것
+                    - 투플들이 각 속성의 도메인에 지정된 값 만을 가져야함
+
+                - 개체 무결성 제약조건(Entity integrity constraint)
+                    - 기본키 제약조건으로도 부름 
+                    - <U>기본키는 Unique이자 NOT NULL이어야 함(값이 중복되어서도, 빠져도 안됨)</U>
+
+                - 참조 무결성 제약조건(Referential integrity constraint)
+                    - 외래키 제약조건으로도 부름
+                    - 자식 릴레이션은 부모의 키가 아닌값은 사용할 수 없음 -> 자식 릴레이션의 외래키는 부모키의 기본키와 도메인이 같아야함
+                    - 외래키가 바뀔 때 기본키의 값이 아닌 것은 제약을 받음
+                    - 참조무결성 제약조건의 옵션
+                        - RESTIRCTED : 자식 릴레이션에서 참조하고 있으면 부모 릴레이션의 삭제 작업을 거부
+                        - CASCADE : 자식 릴레이션의 관련 투플을 같이 삭제
+                        - DEFAULT : 자식 릴레이션의 관련 투플을 미리 설정해둔 값으로 변경
+                        - NULL : 자식 릴레이션의 관련 투플을 NULL 값으로 설정
+
+                - 유일성 제약조건(Unique constraint)
+                    - 일반 속성의 값이 중복되어선 안됨
+                    - NULL은 허용
+
+- DML 학습
+    - SELECT문
+        - OUTER JOIN(외부조인)
+            - LEFT OUTER JOIN : 좌측 테이블을 기준으로 조건에 일치하지 않는 좌측 테이블 데이터도 모두 표시
+            - RIGHT OUTER JOIN : 우측 테이블을 기준으로 조건에 일치하지 않는 우측 테이블 데이터도 모두 표시
+            - FULL(거의 사용하지 않음)
+
+        - 부속질의(SubQuery)
+            - 쿼리 내에 다시 쿼리를 작성하는 것
+            - 서브 쿼리를 쓸 수 있는 장소 -> 쓰는 장소마다 내용이 조금씩 다름
+                - SELECT 절 - 한 컬럼에 하나의 값만 사용가능
+                ```sql
+                SELECT o.orderid
+                     , o.custid
+                     , (SELECT [name] FROM Customer WHERE custid = o.custid) AS '고객명'
+                     , o.bookid
+                     , (SELECT bookname FROM Book WHERE bookid = o.bookid) AS '도서명'
+                     , o.saleprice
+                     , o.orderdate
+                  FROM Orders AS o
+                ```
+                - FROM 절 - 가상의 테이블로 사용
+                ```sql
+                SELECT DISTINCT bookname
+                  FROM (
+                        SELECT b.bookid
+                             , b.bookname
+                             , b.publisher
+                             , o.orderdate
+                             , o.orderid
+                          FROM Book AS b, Orders AS o
+                         WHERE b.bookid = o.bookid
+                       ) AS t
+                ```
+                - WHERE 절 - 여러 조건에 많이 사용
+                ```sql
+                SELECT [name] AS '고객명'
+                  FROM Customer
+                  WHERE custid IN(SELECT custid
+                                    FROM Orders
+                                   WHERE bookid IN (SELECT bookid
+                                                      FROM Book
+                                                     WHERE publisher = '대한미디어'));
+                ```
+
+        - 집합연산 - JOIN도 집합이지만, 속성별로 가로로 병합하기 때문에 집합이라 부르지 않음. 집합은 데이터를 세로로 합치는 것을 뜻함
+            - 차집합(EXCEPT, 사용빈도 낮음) - 하나의 테이블에서 교집합 값을 뺀 나머지
+            - 합집합(UNION, 사용빈도 높음) - UNION(중복제거), UNION ALL(중복허용)
+            - 교집합(INTERSECT, 사용빈도 낮음) - 두 테이블에 모두 존재하는 값
+            - EXISTS - 데이터 자체의 존재여부
+
+- DDL 학습 - SSMS에서 마우스로 조작이 편리
+    - CREATE : 개체(데이터베이스, 테이블, 뷰, 사용자 등등)를 생성하는 구문.
+        ```sql
+        -- 테이블 생성에 한정
+        CREATE TABLE 테이블명
+        ({속성이름 데이터타입
+            [NOT NULL]
+            [UNIQUE]
+            [DEFAULT 기본값]
+            [CHECK 체크조건]
+        }
+            [PRIMARY KEY 속성이름(들)]
+            {[FOREIGN KEY 속성이름 REFERENCES 테이블이름(속성이름)]
+                 [ON UPDATE[NO ACTION | CASADE | SET NULL | SET DEFAULT]]
+            }
+        )
+        ```
+    - ALTER : 개체를 변경(수정)하는 구문
+        ```sql
+        ALTER TABLE 테이블명
+            [ADD 속성이름 테이터타입]   -- 새로운 컬럼(추가) 추가
+            [DROP COLUMN 속성이름] -- 컬럼(속성) 삭제
+            [ALTER COLUMN 속성이름 데이터타입]  -- 컬럼(속성)의 데이터 타입 변경
+            [ALTER COLUMN 속성이름 [NULL | NOT NULL]]   -- 컬럼(속성)의 NULL 속성 변경
+            [ADD PRIMARY KEY(속성이름)] -- 기본키가 없었는데 추가할 때
+            [[ADD|DROP] 제약조건 이름];
+        ```
+    - DROP : 개체를 삭제하는 구문
+        ```sql
+        DROP TABLE 테이블명;
+        ```
+
+        - 외래키로 사용되는 기본키가 있으면, 외래키를 사용하는 테이블 삭제 후, 기본키의 테이블을 삭제해야 함
+
+## 4일차
+- DML 학습(SELECT외)
+    - INSERT
+    - UPDATE
+    - DELETE
+
+- SQL 고급
+    - 내장함수
+    - 서브쿼리 리뷰
+    - 뷰
+    - 인덱스

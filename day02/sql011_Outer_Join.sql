@@ -1,4 +1,4 @@
-﻿-- file :
+﻿-- file : sql011_Outer_Join.sql
 -- date : 240329
 -- desc : 외부조인(OUTER JOIN)
 
