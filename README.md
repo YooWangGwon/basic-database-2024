@@ -120,6 +120,7 @@
     - SQL 명령어 키워드 : SELECT, INSERT, UPDATE, DELETE
     - IT개발 표현언어 : Request, Create, Update, Delete(CRUD로 부름. CRU개발 뜻  INSERT, UPDATE, SELECT를 할 수 있는 기능을 개발하라는 뜻)
     - SELECT
+    
         ```sql
         SELECT [ALL | DISTINCT] 속성이름(들) -- ALL:중복포함, DISTINCT:중복제거
           FROM 테이블이름(들)
@@ -182,6 +183,7 @@
 - DML 학습
     - SELECT문 학습
         - 복합조건(WHERE)
+
         ```sql
         -- 도서 중 축구에 관하고, 가격이 20,000원 이상인 책을 조회
         SELECT bookid
@@ -200,6 +202,7 @@
         ```
 
         - 정렬(ORDER BY)
+
         ```sql
         -- 도서를 가격순으로 검색하고, 가격이 같으면 이름순으로 검색
         SELECT *
@@ -215,63 +218,67 @@
             - 집계 함수
                 - SUM(총합), AVG(평균), MIN(최소값), MAX(최대값), COUNT(개수)
                 - COUNT를 제외한 집계함수들은 *(ALL)를 사용할 수 없음
-            ```sql
-            -- 고객이 주문한 도서의 총 판매액
-            -- 의미있는 열 이름을 출력하고 싶으면 속성이름의 별칭을 지칭하는 AS워키워드를 사용
-            SELECT sum(saleprice) AS [총 매출] -- '' 나 []로 감싸거나 감싸지 않아도 되지만 감싸지 않을 경우에는 스페이스를 써선 안된다. 
-            FROM Orders;
 
-            SELECT COUNT(saleprice) AS [주문개수]
-                , SUM(saleprice) AS [총 판매액]
-                , AVG(saleprice) AS [판매액 평균]
-                , MIN(saleprice) AS [주문도서 최소금액]
-                , MAX(saleprice) AS [주문도서 최대금액]
-            FROM Orders
-            ```
+                ```sql
+                -- 고객이 주문한 도서의 총 판매액
+                -- 의미있는 열 이름을 출력하고 싶으면 속성이름의 별칭을 지칭하는 AS워키워드를 사용
+                SELECT sum(saleprice) AS [총 매출] -- '' 나 []로 감싸거나 감싸지 않아도 되지만 감싸지 않을 경우에는 스페이스를 써선 안된다. 
+                FROM Orders;
+
+                SELECT COUNT(saleprice) AS [주문개수]
+                    , SUM(saleprice) AS [총 판매액]
+                    , AVG(saleprice) AS [판매액 평균]
+                    , MIN(saleprice) AS [주문도서 최소금액]
+                    , MAX(saleprice) AS [주문도서 최대금액]
+                FROM Orders
+                ```
 
             - GROUP BY
                 - 필요한 조건으로 그룹핑을 해서 결과(통계)를 내기 위함
                 - 집계 함수 없이는 GROUP BY를 사용할 수 없음
                 - 집계함수 외 일반컬럼은 GROUP BY절에 들어있는 컬럼만 SELECT문 사용 가능
-            ```sql
-            SELECT custid
-                 , SUM(saleprice) '총판매액'
-                 , COUNT(saleprice) AS '구매횟수'
-                 , AVG(saleprice) AS '평균판매액'	-- custid로 GROUP BY를 했다면 custid와 집계 함수 결과만 출력 할 수 있다.
-              FROM Orders
-             GROUP BY custid;
-            ```
+
+                ```sql
+                SELECT custid
+                    , SUM(saleprice) '총판매액'
+                    , COUNT(saleprice) AS '구매횟수'
+                    , AVG(saleprice) AS '평균판매액'	-- custid로 GROUP BY를 했다면 custid와 집계 함수 결과만 출력 할 수 있다.
+                FROM Orders
+                GROUP BY custid;
+                ```
 
             - HAVING
                 - HAVING은 집계함수의 필터로 GROUP BY보다 뒤에, WHERE절보다 뒤에 작성
                 - WHERE절과 필터링이 다름 -> 검색조건에 무조건 집계함수(SUM, AVG, MAX, MIN, COUNT)가 나와야함.
-            ```sql
-            SELECT custid, COUNT(*) AS '구매수'
-              FROM Orders
-             WHERE saleprice >= 8000
-             GROUP BY custid
-            HAVING COUNT(*) >= 2;
-            ```
+
+                ```sql
+                SELECT custid, COUNT(*) AS '구매수'
+                FROM Orders
+                WHERE saleprice >= 8000
+                GROUP BY custid
+                HAVING COUNT(*) >= 2;
+                ```
         
         - 내부조인(Inner Join)
             - 두개 이상의 테이블 질의
             - 관계형 DB에서 가장 중요한 기법 중 하나 : JOIN
-            ```sql
-            SELECT c.custid
-                 , c.[name]
-                 , c.phone
-                 , o.orderdate
-                 , o.saleprice
-              FROM Customer AS c, Orders AS o -- 각 테이블의 별명으로 줄여서 쓰는게 일반적
-             WHERE c.custid = o.custid
-             ORDER BY c.custid ASC;
 
-            SELECT <열 목록>
-              FROM <첫 번째 테이블>
-             INNER JOIN <두 번째 테이블>
-                ON <조인 조건>
-            [WHERE 검색 조건]
-            ```
+                ```sql
+                SELECT c.custid
+                    , c.[name]
+                    , c.phone
+                    , o.orderdate
+                    , o.saleprice
+                FROM Customer AS c, Orders AS o -- 각 테이블의 별명으로 줄여서 쓰는게 일반적
+                WHERE c.custid = o.custid
+                ORDER BY c.custid ASC;
+
+                SELECT <열 목록>
+                FROM <첫 번째 테이블>
+                INNER JOIN <두 번째 테이블>
+                    ON <조인 조건>
+                [WHERE 검색 조건]
+                ```
             - LEFT|RIGHT OUTER JOIN(외부조인) - 어느 테이블이  기준인지에 따라서 결과가 상이함
                 - [학습참조]:https://sql-joins.leopard.in.ua/
 
@@ -360,39 +367,42 @@
             - 쿼리 내에 다시 쿼리를 작성하는 것
             - 서브 쿼리를 쓸 수 있는 장소 -> 쓰는 장소마다 내용이 조금씩 다름
                 - SELECT 절 - 한 컬럼에 하나의 값만 사용가능
-                ```sql
-                SELECT o.orderid
-                     , o.custid
-                     , (SELECT [name] FROM Customer WHERE custid = o.custid) AS '고객명'
-                     , o.bookid
-                     , (SELECT bookname FROM Book WHERE bookid = o.bookid) AS '도서명'
-                     , o.saleprice
-                     , o.orderdate
-                  FROM Orders AS o
-                ```
+
+                    ```sql
+                    SELECT o.orderid
+                        , o.custid
+                        , (SELECT [name] FROM Customer WHERE custid = o.custid) AS '고객명'
+                        , o.bookid
+                        , (SELECT bookname FROM Book WHERE bookid = o.bookid) AS '도서명'
+                        , o.saleprice
+                        , o.orderdate
+                    FROM Orders AS o
+                    ```
                 - FROM 절 - 가상의 테이블로 사용
-                ```sql
-                SELECT DISTINCT bookname
-                  FROM (
-                        SELECT b.bookid
-                             , b.bookname
-                             , b.publisher
-                             , o.orderdate
-                             , o.orderid
-                          FROM Book AS b, Orders AS o
-                         WHERE b.bookid = o.bookid
-                       ) AS t
-                ```
+
+                    ```sql
+                    SELECT DISTINCT bookname
+                    FROM (
+                            SELECT b.bookid
+                                , b.bookname
+                                , b.publisher
+                                , o.orderdate
+                                , o.orderid
+                            FROM Book AS b, Orders AS o
+                            WHERE b.bookid = o.bookid
+                        ) AS t
+                    ```
                 - WHERE 절 - 여러 조건에 많이 사용
-                ```sql
-                SELECT [name] AS '고객명'
-                  FROM Customer
-                  WHERE custid IN(SELECT custid
-                                    FROM Orders
-                                   WHERE bookid IN (SELECT bookid
-                                                      FROM Book
-                                                     WHERE publisher = '대한미디어'));
-                ```
+                    
+                    ```sql
+                    SELECT [name] AS '고객명'
+                    FROM Customer
+                    WHERE custid IN(SELECT custid
+                                        FROM Orders
+                                    WHERE bookid IN (SELECT bookid
+                                                        FROM Book
+                                                        WHERE publisher = '대한미디어'));
+                    ```
 
         - 집합연산 - JOIN도 집합이지만, 속성별로 가로로 병합하기 때문에 집합이라 부르지 않음. 집합은 데이터를 세로로 합치는 것을 뜻함
             - 차집합(EXCEPT, 사용빈도 낮음) - 하나의 테이블에서 교집합 값을 뺀 나머지
@@ -402,6 +412,7 @@
 
 - DDL 학습 - SSMS에서 마우스로 조작이 편리
     - CREATE : 개체(데이터베이스, 테이블, 뷰, 사용자 등등)를 생성하는 구문.
+
         ```sql
         -- 테이블 생성에 한정
         CREATE TABLE 테이블명
@@ -418,6 +429,7 @@
         )
         ```
     - ALTER : 개체를 변경(수정)하는 구문
+
         ```sql
         ALTER TABLE 테이블명
             [ADD 속성이름 테이터타입]   -- 새로운 컬럼(추가) 추가
@@ -428,6 +440,7 @@
             [[ADD|DROP] 제약조건 이름];
         ```
     - DROP : 개체를 삭제하는 구문
+
         ```sql
         DROP TABLE 테이블명;
         ```
@@ -463,6 +476,7 @@
         WHERE <검색조건>; -- 실무에서는 빼면 안됨. 
     ```
     - DELETE : 테이블에 있는 기본 투플을 삭제하는 명령
+
     ```sql
     -- 트랜잭션을 걸어서 항상 복구를 대비
     DELETE FROM 테이블이름
