@@ -649,6 +649,10 @@
 
     - 실행화면
 
+	https://github.com/YooWangGwon/basic-database-2024/assets/158007390/0f9f7a8d-48bb-4375-a127-9fd634993e62
+
+
+
     
 ## 7일차(24.04.05)
 - SQL 고급
