@@ -55,7 +55,7 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QLineEdit" name="txtBookid">
+    <widget class="QLineEdit" name="txtBookId">
      <property name="geometry">
       <rect>
        <x>80</x>
@@ -63,6 +63,9 @@
        <width>113</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="inputMethodHints">
+      <set>Qt::ImhFormattedNumbersOnly</set>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
@@ -219,6 +222,17 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>txtBookId</tabstop>
+  <tabstop>txtBookName</tabstop>
+  <tabstop>txtPublisher</tabstop>
+  <tabstop>txtPrice</tabstop>
+  <tabstop>btnNew</tabstop>
+  <tabstop>btnSave</tabstop>
+  <tabstop>btnDel</tabstop>
+  <tabstop>btnReload</tabstop>
+  <tabstop>tblBooks</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -1,3 +1,5 @@
+# file : MadangBook.py
+# date : 240403
 # 파이썬 DB 연동 프로그램
 
 import sys
