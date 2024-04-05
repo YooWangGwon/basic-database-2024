@@ -648,8 +648,8 @@
         3. INSERT 쿼리에 한글 입력되는 컬럼은 N''을 붙여줌(유니코드로 입력하라는 뜻)
 
     - 실행화면
-
-	https://github.com/YooWangGwon/basic-database-2024/assets/158007390/0f9f7a8d-48bb-4375-a127-9fd634993e62
+	
+	https://github.com/YooWangGwon/basic-database-2024/assets/158007390/53dc45c0-d50d-4186-8fc7-b7ef2ae51bfe
 
 ## 7일차(24.04.05)
 - SQL 고급
