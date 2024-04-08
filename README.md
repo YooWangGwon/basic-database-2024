@@ -746,6 +746,7 @@
 
     <!-- md 주석. ![인덱스](https://raw.githubusercontent.com/YooWangGwon/basic-database-2024/main/images/db007.png) -->
     <!-- html 이미지 태그가 이미지 사이즈 조정 가능 -->
+  
     <img src="https://raw.githubusercontent.com/YooWangGwon/basic-database-2024/main/images/db007.png" width="800">
 
 ## 8일차(24.04.08)
