@@ -49,27 +49,3 @@ SELECT LAST_NAME
   FROM employees
  WHERE LAST_NAME LIKE '%e%' 
    AND LAST_NAME LIKE '%o%'
-
-/* 5. 현재 날짜 타입을 날짜 함수를 통해 확인하고, 2006년 05월 20일부터 
-    2007년 5월 20일 사이에 고용된 사원들의 성과 이름(Name으로 별칭), 사원번호, 고용일자를 출력하시오.
-    단, 입사일이 빠른 순으로 정렬하시오. */
-
-SELECT GETDATE()
-
-SELECT FIRST_NAME + ' ' + LAST_NAME AS 'Name'
-     , EMPLOYEE_ID
-     , HIRE_DATE
-  FROM employees
- WHERE HIRE_DATE BETWEEN '2006-05-20' AND '2007-05-20'
- ORDER BY HIRE_DATE ASC;
-
-/* 수당을 받는 모든 사원의 성과 이름(Name으로 별칭), 급여, 업무, 수당률을 출력하시오. 이때 급여가 큰
-    순서대로 정렬하되, 급여가 같으면 수당률이 큰 순서대로 정렬하시오. */
-
-SELECT FIRST_NAME + ' ' +LAST_NAME AS 'NAME'
-     , SALARY
-     , JOB_ID
-     , COMMISSION_PCT
-  FROM employees
- WHERE COMMISSION_PCT IS NOT NULL
- ORDER BY COMMISSION_PCT DESC;
