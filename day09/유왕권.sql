@@ -30,8 +30,8 @@ SELECT Names AS '회원명'
   FROM membertbl m
   LEFT OUTER JOIN rentaltbl r
   ON m.memberIdx = r.memberIdx
- WHERE m.Levels = 'A'
-   AND r.rentalDate IS NULL;
+ WHERE r.rentalDate IS NULL
+ ORDER BY m.Levels ASC;
 
 -- 4. 다음과 같은 결과가 나오도록 SQL 문을 작성하시오.
 -- (SELECT Names FROM divtbl WHERE Division = b.Division) AS '책 장르'
