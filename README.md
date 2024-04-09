@@ -802,7 +802,7 @@
         - CASE WHEN THEN END...
         - 내장함수...
 
-    [!HR_ERD](https://raw.githubusercontent.com/YooWangGwon/basic-database-2024/main/images/db008.png)
+    ![HR_ERD](https://raw.githubusercontent.com/YooWangGwon/basic-database-2024/main/images/db008.png)
 
 - 공부를 더할 부분
     - 트랜잭션 중급이상
